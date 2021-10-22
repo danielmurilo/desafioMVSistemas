@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" href="/img/waiterExpressLogo.jpg" type="image/x-icon">
+<title>Ítens do café da manhã</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+
+
+</head>
+<body>
+	<!-- NAV BAR -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand"> 
+			<img th:src="@{/img/cafePic.jpg}"  width="45" height="45" class="d-inline-block align-top rounded">
+			 > Café da Manhã</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+				aria-controls="navbarColor02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor02">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">					
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Início</a></li>
+					<li class="nav-item"><a class="nav-link" href="/colaboradores">Colaboradores</a></li>
+					<li class="nav-item"><a class="nav-link" href="/items">Ítens</a></li>				
+				</ul>				
+			</div>
+		</div>		
+	</nav>
+	<!-- FIM NAV BAR -->
+
+	<div style="max-width: 700px; margin: auto;">
+	
+		<div class="panel panel-default" style="margin: 10px;">
+			<form class="form-inline" method="POST" >
+				<div class="btn-group">
+				
+					<div class="dropdown" style="margin: 1px">
+					    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					      Colaboradores
+					    </button>
+					    <div class="dropdown-menu" th:field="*{colaboradores}">
+					      <a class="dropdown-item" href="#" th:each="colaborador: ${colaboradores}" th:value="${colaborador.id}" th:text="${colaborador.nome}"></a>					      
+					    </div>
+					  </div>
+					
+					
+					<div class="dropdown" style="margin: 1px">
+					    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					      Ítens
+					    </button>
+					    <div class="dropdown-menu" th:field="*{itens}">
+					      <a class="dropdown-item" href="#" th:each="item: ${itens}" th:value="${item.id}" th:text="${item.nome}"></a>					      
+					    </div>
+					  </div>
+					  
+					  <button type="button" class="btn btn-primary dropdown" style="margin: 2px"> Salvar </button>
+					
+
+				
+				</div>				
+			</form>
+			
+			
+			
+		</div>
+
+
+		<!-- Listando Colaboradores e Items -->
+	
+
+	</div>
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

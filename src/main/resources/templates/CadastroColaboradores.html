@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" href="/img/waiterExpressLogo.jpg" type="image/x-icon">
+<title>Colaboradores</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+
+
+</head>
+<body>
+	<!-- NAV BAR -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand"> 
+			<img th:src="@{/img/colaborador.jpeg}"  width="45" height="45" class="d-inline-block align-top rounded">
+			 > Cadastro de Colaboradores</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+				aria-controls="navbarColor02" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor02">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/colaboradores">Colaboradores</a></li>
+					<li class="nav-item"><a class="nav-link" href="/items">Ítens</a></li>					
+				</ul>
+				<form class="d-flex" method="get" th:action="@{/colaboradores/procurar}">
+					<input class="form-control me-2" type="search" name="busca"
+						placeholder="Procurar" aria-label="Search">
+					<button class="btn btn-outline-light" type="submit">Procurar</button>
+				</form>
+			</div>
+		</div>		
+	</nav>
+	<!-- FIM NAV BAR -->
+
+	<div style="max-width: 600px; margin: auto;">
+
+		<div class="panel panel-default" style="margin: 10px;">
+
+			<form class="form-inline" method="POST" th:action="@{/colaboradores}"
+				th:object="${colaborador}" style="margin: 20px">
+
+				<div class="form-group row">
+				
+					<input th:field="*{id}" type="hidden">
+					<input th:field="*{nome}" class="form-control" th:classappend="|${#fields.hasErrors('nome') ? 'is-invalid' : ''} ${not #strings.isEmpty(mensagemSalvo) ? 'is-valid' : ''}|"
+						type="text" style="width: 70%" placeholder="Informe o nome do colaborador">
+					<input th:field="*{cpf}" class="form-control" th:classappend="|${#fields.hasErrors('cpf') ? 'is-invalid' : ''} ${not #strings.isEmpty(mensagemSalvo) ? 'is-valid' : ''}|"
+						type="text" style="width: 70%" placeholder="Informe o cpf do colaborador">
+					<button type="submit" class="btn btn-primary"
+						style="width: 27%; margin-left: 3%;">Salvar</button>
+					<!-- mensagem de erro -->
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}">
+						<span th:errors="*{nome}"></span>
+					</div>
+					<!-- mensagem de sucesso -->
+					<div class="valid-feedback"
+						th:if="${not #strings.isEmpty(mensagemSalvo)}">
+						<span th:text="${mensagemSalvo}">test</span>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+		<!-- Listando Items -->
+		<div class="panel panel-default" style="margin: 10px">
+			<div class="panel-heading">
+				<h3 class="panel-title"></h3>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nome</th>
+							<th>CPF</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="colaborador : ${colaboradores}" class='clickable-row' data-href=/colaboradores/selecionar/{id}(id=${colaborador.id})>
+							<td th:text="${colaborador.id}"></td>
+							<td th:text="${colaborador.nome}"></td>
+							<td th:text="${colaborador.cpf}"></td>
+							<td><a th:href="@{/colaboradores/selecionar/{id}(id=${colaborador.id})}">Atualizar</a></td>
+							<td><a data-method="DELETE" th:href="@{/colaboradores/deletar/{id}(id=${colaborador.id})}">Deletar</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+</html>
